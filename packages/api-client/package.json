@@ -1,0 +1,30 @@
+{
+  "name": "@erp/api-client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./zod": "./src/zod.ts"
+  },
+  "scripts": {
+    "generate": "orval --config orval.config.ts",
+    "snapshot": "node scripts/snapshot.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@erp/core": "workspace:*",
+    "@tanstack/react-query": "^5.104.0",
+    "zod": "^4.6.5"
+  },
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "orval": "^8.38.0",
+    "typescript": "~5.9.3"
+  }
+}

@@ -1,0 +1,37 @@
+# Optional: deploy from GitHub instead of Cloudflare's Git integration.
+# Leave this unused if Pages is connected directly to the repo (recommended).
+#
+# Secrets: CLOUDFLARE_API_TOKEN (Account → Pages → Edit), CLOUDFLARE_ACCOUNT_ID
+# Variable: NEXT_PUBLIC_API_URL  (API origin, no trailing slash)
+name: Deploy Pages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - run: corepack enable
+      - run: yarn install --immutable
+      - name: Require API URL
+        env:
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+        run: |
+          if [ -z "${NEXT_PUBLIC_API_URL:-}" ]; then
+            echo "Set repository variable NEXT_PUBLIC_API_URL to the API origin (no trailing slash)."
+            exit 1
+          fi
+      - run: yarn build
+        env:
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy apps/web/out --project-name=erp-web --commit-dirty=true

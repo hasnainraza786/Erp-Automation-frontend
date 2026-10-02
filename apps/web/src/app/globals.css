@@ -1,0 +1,69 @@
+@import 'tailwindcss';
+
+@source "../../../../packages/ui/src";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-card: #ffffff;
+  --color-card-foreground: #0f172a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0f172a;
+  --color-primary: #2563eb;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f1f5f9;
+  --color-secondary-foreground: #0f172a;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+  --color-border: #e2e8f0;
+  --color-input: #cbd5e1;
+  --color-ring: #2563eb;
+  --color-destructive: #dc2626;
+  --color-success: #059669;
+  --color-sidebar: #0f172a;
+  --color-sidebar-foreground: #cbd5e1;
+  --color-sidebar-active: #1e293b;
+}
+
+.dark {
+  --color-background: #0b1120;
+  --color-foreground: #e2e8f0;
+  --color-card: #0f172a;
+  --color-card-foreground: #e2e8f0;
+  --color-popover: #111827;
+  --color-popover-foreground: #e2e8f0;
+  --color-secondary: #1e293b;
+  --color-secondary-foreground: #e2e8f0;
+  --color-muted: #1e293b;
+  --color-muted-foreground: #94a3b8;
+  --color-border: #1e293b;
+  --color-input: #334155;
+  --color-sidebar: #020617;
+  --color-sidebar-active: #1e293b;
+}
+
+@layer base {
+  html,
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  * {
+    @apply border-border;
+  }
+  input[type='number']::-webkit-inner-spin-button {
+    opacity: 0.4;
+  }
+}
+
+@media print {
+  aside,
+  header,
+  .no-print {
+    display: none !important;
+  }
+}

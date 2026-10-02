@@ -1,0 +1,4 @@
+# Cloudflare Pages. Dashboard Git builds use the same output directory.
+name = "erp-web"
+compatibility_date = "2026-09-30"
+pages_build_output_dir = "apps/web/out"
